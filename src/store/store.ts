@@ -10,7 +10,7 @@ const persistConfig = {
     key: "root",
     version: 1,
     storage,
-    transforms: [createFilter("counter", [])],
+    transforms: [createFilter("counter", []), createFilter("auth", []),createFilter("_persist", [])],
 };
 
 const rootReducer = combineReducers({
