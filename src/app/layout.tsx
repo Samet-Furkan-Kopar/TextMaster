@@ -2,11 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { persistStore } from "redux-persist";
-import { persistor, store } from "@/store/store";
-import { Suspense } from "react";
 import { ReduxProvider } from "@/store/providerRedux";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +17,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={`${inter.className} bg-dark-2`}>
                 <ReduxProvider>
                     <Toaster />
                     {children}

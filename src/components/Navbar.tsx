@@ -4,6 +4,8 @@ import React, { useEffect } from 'react'
 import { useCounter } from '@/store/counter/hooks';
 // import { useSelector } from 'react-redux';
 import { dailyCounterIncrease } from '@/store/counter/actions';
+import { useTranslation } from 'react-i18next';
+
 const Navbar = () => {
     // const session = await getSession();
     // const counter = useSelector((state: any) => state.counter)
@@ -11,12 +13,6 @@ const Navbar = () => {
     
     const counter = useCounter();
     console.log(counter);
-
-   
-
-
-
-    
     
   return (
     <div>
