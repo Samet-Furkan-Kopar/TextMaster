@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${inter.className} bg-dark-2`}>
+            <body className={`${inter.className} `}>
                 <ReduxProvider>
                     <Toaster />
                     {children}

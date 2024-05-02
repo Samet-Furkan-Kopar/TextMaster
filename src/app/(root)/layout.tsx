@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 const RootLayout = ({children}:{children : ReactNode}) => {
   return (
-    <main>
+    <main className='bg-dark-2 h-min-screen'>
         {children}
     </main>
   )

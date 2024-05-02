@@ -59,6 +59,10 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      backgroundImage: {
+        login : "url('/images/bgLogin.svg')",
+        responsiveLogin : "url('/images/responsivebgLogin.svg')"
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
