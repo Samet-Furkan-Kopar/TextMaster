@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-// import authReducer from "./user/userSlice";
+import authReducer from "./user/userSlice";
 import counterReducer from "./counter/counterSlice";
 // import langReducer from "./language/languageSlice";
 import storage from "redux-persist/lib/storage";
@@ -14,7 +14,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-    // auth: authReducer,
+    auth: authReducer,
     counter: counterReducer,
     // lang: langReducer,
 });

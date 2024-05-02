@@ -14,26 +14,23 @@ export const getSession = async()=>{
     return session;
 }
 
-
 let username = 'furkan kopar';
 let isPro = true;
 
 interface LoginFormData {
-    username: string;
+    email: string;
     password: string;
   }
 
 export const login = async(formData :LoginFormData)=>{
-    
     const session = await getSession();
-    
 
     const formUserName ="user"
     const formPassword = "123456";
 
     // burada bir api işlemi yaptırarak kullanıcı adı ve şifresini kontrol edip sessiona yazdırmalıyız ve ardından ekranda göstermek için bir message döndermeliyiz
 
-    if(formUserName !== formData.username){
+    if(formUserName !== formData.email){
         return {error: 'Wrong Credentials'}
     }
 

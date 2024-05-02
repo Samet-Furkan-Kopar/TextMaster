@@ -1,1 +1,1 @@
-export * as FetchService from './demoFetch';
+export * as FetchService from './authFetch';

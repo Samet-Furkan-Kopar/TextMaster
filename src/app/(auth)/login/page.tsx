@@ -10,7 +10,12 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import HttpsIcon from "@mui/icons-material/Https";
 import * as yup from "yup";
-
+// import { getSession, login } from "@/actions/sessionAction";
+import { redirect, useRouter } from "next/navigation";
+import { setCurrentAccount } from "@/store/user/actions";
+import { toast, useToast } from "@/components/ui/use-toast";
+import { login } from "@/services/authFetch";
+import { useAccount } from "@/store/user/hooks";
 type Inputs = {
     email: string;
     password: string;
@@ -23,6 +28,9 @@ type EndAdormentProps = {
 export default function Login() {
     const [progress, setProgress] = useState<Boolean>(false);
     const [visible, setVisible] = useState(false);
+    const { toast } = useToast();
+    const router = useRouter();
+    const currentAccount = useAccount();
 
     const schema = yup.object({
         email: yup.string().email("Email Formatı Uygun Değil"),
@@ -39,12 +47,33 @@ export default function Login() {
     });
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
-        setProgress(true);
-        setTimeout(() => {
-            setProgress(false);
-        }, 2000);
-    };
+        try {
+            setProgress(true);
+            // const session = await getSession();
 
+            const response = await login(data);
+            console.log(response);
+            if (response?.succeded === true) {
+                console.log("result");
+                setCurrentAccount(response?.data);
+                setProgress(false);
+                toast({
+                    title: "LogIn Successfully",
+                  });
+                    router.push("/login");
+                
+            } else {
+               toast({title : "Login Failed ! Please Check Your Email and Password"})
+            }
+        } catch (Error) {
+           
+            toast({title : Error?.message})
+           
+        } finally {
+            setProgress(false);
+        }
+    };
+    if(currentAccount?.user) return router.push("/")
     // const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
     const EndAdorment = ({ visible, setVisible }: EndAdormentProps) => {
         return (
@@ -126,7 +155,7 @@ export default function Login() {
                             )
                         }
                     >
-                        Giriş Yap
+                        Login
                     </Button>
                 </form>
             </div>

@@ -10,6 +10,10 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import HttpsIcon from "@mui/icons-material/Https";
 import * as yup from "yup";
+import { useToast } from "@/components/ui/use-toast";
+import { userRegister } from "@/services/authFetch";
+import {  useRouter } from "next/navigation";
+import { useAccount } from "@/store/user/hooks";
 
 type Inputs = {
     email: string;
@@ -24,6 +28,9 @@ type EndAdormentProps = {
 export default function Register() {
     const [progress, setProgress] = useState<Boolean>(false);
     const [visible, setVisible] = useState(false);
+    const { toast } = useToast();
+    const router = useRouter();
+    const currentAccount = useAccount();
 
     const schema = yup.object({
         email: yup.string().email("Email Formatı Uygun Değil"),
@@ -39,16 +46,37 @@ export default function Register() {
     } = useForm<Inputs>({
         resolver: yupResolver(schema),
     });
-    console.log(progress);
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
-        setProgress(true);
-        setTimeout(() => {
+        try {
+            setProgress(true);
+            // const session = await getSession();
+
+            const response = await userRegister(data);
+            console.log(response);
+            if (response?.succeded === true) {
+                console.log("result");
+                // setCurrentAccount(response?.data);
+                setProgress(false);
+                toast({
+                    title: response?.message,
+                  });
+                  router.push("/login");
+                
+            } else {
+               toast({title: response?.message})
+            }
+        } catch (Error) {
+           
+           console.log(Error);
+           
+        } finally {
             setProgress(false);
-        }, 2000);
+        }
     };
 
-    // const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+    if(currentAccount?.user) return router.push("/")
+
     const EndAdorment = ({ visible, setVisible }: EndAdormentProps) => {
         return (
             <InputAdornment position="end">
@@ -62,6 +90,7 @@ export default function Register() {
             </InputAdornment>
         );
     };
+
     return (
         // <div onSubmit={handleSubmit(onSubmit)} className="flex flex-col  max-w-[300px] mx-auto justify-center items-center xl:h-[500px] h-[400px] mt-48  rounded-[14px] bg-white">
         <div className="h-screen bg-login flex flex-col items-center justify-center mx-auto ">
@@ -153,7 +182,7 @@ export default function Register() {
                             )
                         }
                     >
-                        Giriş Yap
+                        Register
                     </Button>
                 </form>
             </div>
