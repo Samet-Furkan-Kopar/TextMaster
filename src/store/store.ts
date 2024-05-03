@@ -4,13 +4,19 @@ import counterReducer from "./counter/counterSlice";
 // import langReducer from "./language/languageSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER,persistStore } from "redux-persist";
-import { createFilter } from "redux-persist-transform-filter";
-
+import { createBlacklistFilter, createFilter } from "redux-persist-transform-filter";
+const saveSubsetFilter = createFilter('root', ['auth', 'counter']);
 const persistConfig = {
     key: "root",
     version: 1,
     storage,
-    transforms: [createFilter("counter", []), createFilter("auth", []),createFilter("_persist", [])],
+    // transforms: [
+    //  createFilter("counter", []),
+    //  createFilter("auth", []),
+    //  createFilter("_persist", [])
+    // ],
+    // transforms: [saveSubsetFilter]
+    // blackList: ["auth", "counter"],
 };
 
 const rootReducer = combineReducers({

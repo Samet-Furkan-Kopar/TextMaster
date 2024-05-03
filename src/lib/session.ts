@@ -4,9 +4,10 @@ import { SessionOptions } from "iron-session";
 export interface SessionData {
     userId? : string;
     username? : string;
-    img? : string;
     isPro?:boolean
     isLoggedIn: boolean;
+    image_url?: string;
+    email?: string;
 }
 
 export const defaultSession: SessionData = {
