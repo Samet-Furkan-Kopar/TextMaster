@@ -40,6 +40,7 @@ async function request(url: string, data: any = null, method: string = "GET", ty
 
 export const get = (url: string) => request(url);
 export const post = (url: string, data: any) => request(url, data, "POST");
+export const googlePost = (url: string) => request(url, "POST");
 export const postJSON = (url: string, data: any) => request(url, data, "POST", "JSON");
 export const put = (url: string, data: any) => request(url, data, "PUT");
 export const putJSON = (url: string, data: any) => request(url, data, "PUT", "JSON");

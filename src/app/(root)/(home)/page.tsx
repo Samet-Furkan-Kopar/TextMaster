@@ -1,11 +1,22 @@
-
-import { getSession } from '@/actions/sessionAction';
-import Link from 'next/link';
+"use client"
+// import { getSession } from '@/actions/sessionAction';
+import { googleLogin, login } from '@/services/authFetch';
+import { useRouter } from 'next/navigation';
+// import Link from 'next/link';
 
 import React from 'react'
 
-const Home =async () => {
-    const session = await getSession();
+const Home = () => {
+    const router = useRouter();
+
+    const login = async() => {
+        // const res = await googleLogin();
+        const res =await fetch('http://localhost:8800/api/v1/auth/google-login',{method:'post'});
+        const data = await res.json();
+        console.log(data);
+        router.push(data.url)
+        
+    }
  
   return (
     <section className="flex size-full flex-col gap-10 text-white">
@@ -19,7 +30,8 @@ const Home =async () => {
                         <p className="text-lg font-medium text-sky-1 lg:text-2xl">
                            awdawdawd
                         </p>
-                            <Link className='bg-white text-black' href='/login'>login</Link>
+                            {/* <Link className='bg-white text-black' href='/login'>login</Link> */}
+                            <button onClick={()=>login()} className='bg-white text-black'>login</button>
                     </div>
                 </div>
             </div>

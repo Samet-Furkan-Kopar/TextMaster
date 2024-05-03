@@ -50,13 +50,10 @@ export default function Register() {
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
             setProgress(true);
-            // const session = await getSession();
 
             const response = await userRegister(data);
             console.log(response);
             if (response?.succeded === true) {
-                console.log("result");
-                // setCurrentAccount(response?.data);
                 setProgress(false);
                 toast({
                     title: response?.message,
@@ -67,15 +64,11 @@ export default function Register() {
                toast({title: response?.message})
             }
         } catch (Error) {
-           
-           console.log(Error);
-           
+            toast({ title: Error?.message });
         } finally {
             setProgress(false);
         }
     };
-
-    if(currentAccount?.user) return router.push("/")
 
     const EndAdorment = ({ visible, setVisible }: EndAdormentProps) => {
         return (
@@ -92,11 +85,9 @@ export default function Register() {
     };
 
     return (
-        // <div onSubmit={handleSubmit(onSubmit)} className="flex flex-col  max-w-[300px] mx-auto justify-center items-center xl:h-[500px] h-[400px] mt-48  rounded-[14px] bg-white">
         <div className="h-screen bg-login flex flex-col items-center justify-center mx-auto ">
             <div className=" p-5 flex flex-col items-center justify-center  h-[400px] bg-zinc-50 xl:w-[450px] w-[350px] rounded-md shadow-xl">
                 <h3 className="text-3xl font-semibold my-5">Register</h3>
-                {/* <button className="bg-[#0288D1] p-2 text-white rounded-md font-bold">Google Giriş</button> */}
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField
                         margin="normal"

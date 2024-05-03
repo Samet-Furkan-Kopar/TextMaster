@@ -4,20 +4,17 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import LoginIcon from "@mui/icons-material/Login";
 import CircularProgress from "@mui/material/CircularProgress";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AccountCircle } from "@mui/icons-material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import HttpsIcon from "@mui/icons-material/Https";
 import * as yup from "yup";
-// import { getSession, login } from "@/actions/sessionAction";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { setCurrentAccount } from "@/store/user/actions";
 import { useToast } from "@/components/ui/use-toast";
 import { login } from "@/services/authFetch";
-import { useAccount } from "@/store/user/hooks";
 import { getSession, loginSession } from "@/actions/sessionAction";
-
 
 type Inputs = {
     email: string;
@@ -33,16 +30,11 @@ export default function Login() {
     const [visible, setVisible] = useState(false);
     const { toast } = useToast();
     const router = useRouter();
-    const currentAccount = useAccount();
-
-    console.log(currentAccount, "currentAccount");
 
     const schema = yup.object({
         email: yup.string().email("Email Formatı Uygun Değil"),
         password: yup.string().min(6, "Şifre 6 karakterden az olamaz").required("Şifre gerekli*"),
     });
-
-    // Oturum açılmışsa, yönlendirme işlemini gerçekleştir ve Loader bileşenini render et
 
     const {
         register,
