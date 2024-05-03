@@ -13,11 +13,11 @@ import * as yup from "yup";
 // import { getSession, login } from "@/actions/sessionAction";
 import { redirect, useRouter } from "next/navigation";
 import { setCurrentAccount } from "@/store/user/actions";
-import { toast, useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { login } from "@/services/authFetch";
 import { useAccount } from "@/store/user/hooks";
 import { getSession, loginSession } from "@/actions/sessionAction";
-import Loader from "@/components/Loader";
+
 
 type Inputs = {
     email: string;
@@ -42,9 +42,7 @@ export default function Login() {
         password: yup.string().min(6, "Şifre 6 karakterden az olamaz").required("Şifre gerekli*"),
     });
 
-    
     // Oturum açılmışsa, yönlendirme işlemini gerçekleştir ve Loader bileşenini render et
-
 
     const {
         register,
@@ -60,16 +58,14 @@ export default function Login() {
             setProgress(true);
             const session = await getSession();
             const response = await login(data);
-            console.log(response);
             if (response?.succeded === true) {
-                console.log("result");
-               await loginSession(response?.data?.user)
+                await loginSession(response?.data?.user);
                 setCurrentAccount(response?.data?.token);
                 setProgress(false);
                 toast({
                     title: "LogIn Successfully",
                 });
-                router.push("/login");
+                 router.push("/");
             } else {
                 toast({ title: "Login Failed ! Please Check Your Email and Password" });
             }
@@ -79,10 +75,6 @@ export default function Login() {
             setProgress(false);
         }
     };
-
-    
-    
-
     const EndAdorment = ({ visible, setVisible }: EndAdormentProps) => {
         return (
             <InputAdornment position="end">
@@ -97,9 +89,7 @@ export default function Login() {
         );
     };
     return (
-        // <div onSubmit={handleSubmit(onSubmit)} className="flex flex-col  max-w-[300px] mx-auto justify-center items-center xl:h-[500px] h-[400px] mt-48  rounded-[14px] bg-white">
-        
-            <div className="h-screen bg-login flex flex-col items-center justify-center mx-auto ">
+        <div className="h-screen bg-login flex flex-col items-center justify-center mx-auto ">
             <div className=" p-5 flex flex-col items-center justify-center  h-[400px] bg-zinc-50 xl:w-[450px] w-[350px] rounded-md shadow-xl">
                 <h3 className="text-3xl font-semibold my-5">Login</h3>
                 {/* <button className="bg-[#0288D1] p-2 text-white rounded-md font-bold">Google Giriş</button> */}
