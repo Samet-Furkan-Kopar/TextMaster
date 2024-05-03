@@ -15,7 +15,6 @@ const Home = () => {
         const data = await res.json();
         console.log(data);
         router.push(data.url)
-        
     }
  
   return (
@@ -30,12 +29,8 @@ const Home = () => {
                         <p className="text-lg font-medium text-sky-1 lg:text-2xl">
                            awdawdawd
                         </p>
-<<<<<<< HEAD
                             {/* <Link className='bg-white text-black' href='/login'>login</Link> */}
                             <button onClick={()=>login()} className='bg-white text-black'>login</button>
-=======
-                         
->>>>>>> 66166b6b38fa75f98ec8b5b0ecfff36f672358bd
                     </div>
                 </div>
             </div>
