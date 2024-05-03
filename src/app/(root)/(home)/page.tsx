@@ -19,7 +19,7 @@ const Home =async () => {
                         <p className="text-lg font-medium text-sky-1 lg:text-2xl">
                            awdawdawd
                         </p>
-                            <Link className='bg-white text-black' href='/login'>login</Link>
+                         
                     </div>
                 </div>
             </div>
