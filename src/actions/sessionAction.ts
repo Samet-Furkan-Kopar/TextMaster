@@ -26,7 +26,7 @@ export const loginSession = async(formData :LoginFormData)=>{
 
     session.userId = formData._id;
     session.username = formData.username;
-    session.isPro = isPro;
+    session.isPro = formData?.isPro;
     session.isLoggedIn = true;  
     session.image_url = formData.image_url;
     session.email = formData.email;
