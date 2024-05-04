@@ -7,30 +7,28 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Tilt } from "react-tilt";
 
-const MeetingTypeList = () => {
-    const container = {
-        visible: {
-            transition: {
-                staggerChildren: 0.2,
-            },
-        },
-    };
-    const items = {
-        hidden: { opacity: 0, translateY: 20 },
-        visible: {
-            opacity: 1,
-            translateY: 0,
-        },
-    };
-    const [values, setValues] = useState({
-        dateTime: new Date(),
-        description: "",
-        link: "",
-    });
+type MeetingTypeListProps = {
+    setLoading: (loading: boolean) => void;
+};
 
+const MeetingTypeList = ({ setLoading}:MeetingTypeListProps) => {
     const router = useRouter();
     const { toast } = useToast();
+    
 
+    const handleRoute = (route:string)=>{
+        setLoading(true); // Yüklenme başladı
+        
+        new Promise(() => {
+            router.push(`${route}`);
+        }).finally(() => {
+            setLoading(false); // Yönlendirme tamamlandı, yüklenme durumu kapatıldı
+        });
+        
+        // router.push(`${route}`).then(() => {
+        //     setLoading(false); // Yönlendirme tamamlandı, yüklenme durumu kapatıldı
+        // });
+    }
     return (
         <motion.div
             initial={{ opacity: 0, translateY: 40 }}
@@ -66,7 +64,7 @@ const MeetingTypeList = () => {
                         title="Speech to Text"
                         description="Convert your speech to text"
                         handleClick={() => {
-                            router.push("/speech-to-text");
+                            handleRoute("/speech-to-text");
                         }}
                         className="bg-blue-1"
                     />
@@ -83,7 +81,7 @@ const MeetingTypeList = () => {
                         title="Image to Text"
                         description="Convert the text in the image to text"
                         handleClick={() => {
-                            router.push("/image-to-text");
+                            handleRoute("/image-to-text");
                         }}
                         className="bg-yellow-1"
                     />
@@ -100,7 +98,7 @@ const MeetingTypeList = () => {
                         title="Text Summary"
                         description="Summarize your text"
                         handleClick={() => {
-                            router.push("/text-summarizer");
+                            handleRoute("/text-summarizer");
                         }}
                         className="bg-purple-1"
                     />

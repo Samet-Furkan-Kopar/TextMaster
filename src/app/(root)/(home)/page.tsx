@@ -4,10 +4,12 @@ import { googleLogin, login } from "@/services/authFetch";
 import { useRouter } from "next/navigation";
 // import Link from 'next/link';
 import ConverterTypes from "@/components/ConverterTypes";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Loader from "@/components/Loader";
 const Home = () => {
     const router = useRouter();
+    const [loading, setLoading] = useState(false)
 
     const login = async () => {
         // const res = await googleLogin();
@@ -18,6 +20,7 @@ const Home = () => {
         console.log(data);
         router.push(data.url);
     };
+    if(loading) return <Loader/>
 
     return (
         <motion.section
@@ -37,7 +40,7 @@ const Home = () => {
                         {/* <button onClick={()=>login()} className='bg-white text-black'>login</button> */}
                     </div>
                 </div>
-                <ConverterTypes />
+                <ConverterTypes setLoading={setLoading} loading={loading} />
             </div>
         </motion.section>
     );
