@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div>
+    <div className='fixed bottom-0'>
       Footer
     </div>
   )
