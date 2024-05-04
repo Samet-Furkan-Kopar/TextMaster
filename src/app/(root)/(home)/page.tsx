@@ -30,17 +30,16 @@ const Home = () => {
         >
             <div className="h-[250px] w-full bg-home rounded-[20px] bg-black bg-cover mx-auto">
                 <div className="flex h-full flex-col justify-between max-md:px-5 max-md:py-8 lg:p-11">
-                    <h2 className="glassmorphism max-w-[270px] rounded py-2 text-center text-base font-normal">
+                    <h2 className="glassmorphism max-w-[270px] rounded py-2 text-center max-md:text-xl text-2xl font-medium text-sky-1">
                         TEST
                     </h2>
                     <div className="flex flex-col gap-2">
-                        <h1 className="text-4xl font-extrabold lg:text-7xl">short description</h1>
-                        <p className="text-lg font-medium text-sky-1 lg:text-2xl">Description</p>
+                        <p className="text-lg font-medium text-sky-1 lg:text-2xl">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla iusto eos tempore atque beatae sint, dolor esse quod quae qui.</p>
                         {/* <Link className='bg-white text-black' href='/login'>login</Link> */}
                         {/* <button onClick={()=>login()} className='bg-white text-black'>login</button> */}
                     </div>
                 </div>
-                <ConverterTypes setLoading={setLoading} loading={loading} />
+                <ConverterTypes setLoading={setLoading} />
             </div>
         </motion.section>
     );

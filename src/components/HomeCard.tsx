@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils';
-import Image from 'next/image'
 import React from 'react'
 import { CiTextAlignLeft } from "react-icons/ci";
 import { PiUserSound } from "react-icons/pi";
@@ -38,12 +37,6 @@ const HomeCard = ({icon, title, description, handleClick, className}: HomeCardPr
     onClick={handleClick}
      >
       <div className="flex items-center justify-center glassmorphism size-12 rounded-[10px]">
-            {/* <Image
-                src={img}
-                width={27}
-                height={27}
-                alt="meeting"
-            /> */}
             {icons.map((iconItem) => {
                 if(iconItem.name === icon){
                     return iconItem.component

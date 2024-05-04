@@ -24,11 +24,8 @@ const MeetingTypeList = ({ setLoading}:MeetingTypeListProps) => {
         }).finally(() => {
             setLoading(false); // Yönlendirme tamamlandı, yüklenme durumu kapatıldı
         });
-        
-        // router.push(`${route}`).then(() => {
-        //     setLoading(false); // Yönlendirme tamamlandı, yüklenme durumu kapatıldı
-        // });
     }
+
     return (
         <motion.div
             initial={{ opacity: 0, translateY: 40 }}
@@ -47,7 +44,7 @@ const MeetingTypeList = ({ setLoading}:MeetingTypeListProps) => {
                         title="Text Converter"
                         description="Calculate the number of letters, words and sentences in the text"
                         handleClick={() => {
-                            router.push("/text-parser");
+                            router.push("/text-counter");
                         }}
                         className="bg-orange-1"
                     />
