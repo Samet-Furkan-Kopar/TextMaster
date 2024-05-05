@@ -14,7 +14,9 @@
     "@hookform/resolvers": "^3.3.4",
     "@mui/icons-material": "^5.15.16",
     "@mui/material": "^5.15.16",
+    "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@reduxjs/toolkit": "^1.9.7",
     "class-variance-authority": "^0.7.0",
@@ -37,6 +39,7 @@
     "redux-persist-transform-filter": "^0.0.22",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "tesseract.js": "^5.0.5",
     "yup": "^1.4.0"
   },
   "devDependencies": {

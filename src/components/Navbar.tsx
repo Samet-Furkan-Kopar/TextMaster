@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useRouter } from "next/navigation";
 import { getSession, logout } from "@/actions/sessionAction";
 
@@ -19,8 +20,13 @@ const Navbar = () => {
     useEffect(() => {
         getSession().then((res: any) => {
             setSession(res);
+          
         });
     }, []);
+
+    useEffect(()=>{
+        console.log(session)
+    },[session])
 
     return (
         <div className="bg-[#1C1F2E] h-16 flex flex-row justify-between items-center">
@@ -35,7 +41,13 @@ const Navbar = () => {
             <div className="flex ">
                 {session?.isLoggedIn ? (
                     <DropdownMenu>
-                        <DropdownMenuTrigger className="w-9 h-9 bg-[#9a22f0] mr-14 rounded-full cursor-pointer "></DropdownMenuTrigger>
+                        <DropdownMenuTrigger className="rounded-full border-none mr-14 ">
+                        <Avatar>
+  <AvatarImage src={session.image_url} />
+  <AvatarFallback>{session.username.charAt(0).toUpperCase()}</AvatarFallback>
+</Avatar>
+
+                        </DropdownMenuTrigger>
 
                         <DropdownMenuContent>
                             <DropdownMenuLabel className="cursor-pointer">
