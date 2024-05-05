@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { IoCopyOutline } from "react-icons/io5";
 import { BsFiletypePdf } from "react-icons/bs";
+import { AiOutlineDelete } from "react-icons/ai";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createWorker } from "tesseract.js";
 import { CloudUploadIcon } from "lucide-react";
@@ -65,23 +66,41 @@ const page = () => {
       <Card className="flex flex-col w-1/2 min-h-[450px] bg-slate-100">
         <CardHeader className="flex flex-row space-y-0 justify-between items-center">
           <CardTitle className="flex text-center">Image Upload</CardTitle>
-          <Button
-            component="label"
-            role={undefined}
-            variant="text"
-            tabIndex={-1}
-            startIcon={<CloudUploadIcon color="black" />}
-            onChange={handleChangeImage}
-          >
-            <VisuallyHiddenInput type="file" />
-          </Button>
+          <div>
+            {selectedImage ? (
+              <Button
+                component="label"
+                role={undefined}
+                variant="text"
+                tabIndex={-1}
+                startIcon={<AiOutlineDelete size={25} color="black" />}
+                onClick={() => {
+                  setSelectedImage(null);
+                  setTextResult("");
+                }}
+              ></Button>
+            ) : (
+              <></>
+            )}
+
+            <Button
+              component="label"
+              role={undefined}
+              variant="text"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon color="black" />}
+              onChange={handleChangeImage}
+            >
+              <VisuallyHiddenInput type="file" />
+            </Button>
+          </div>
         </CardHeader>
         {selectedImage && (
           <div className="box-image">
             <img
               src={URL.createObjectURL(selectedImage)}
               alt="thumb"
-              className="w-full"
+              className="w-full max-h-80"
             />
           </div>
         )}
