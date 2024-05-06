@@ -11,8 +11,9 @@ import { createWorker } from "tesseract.js";
 import { CloudUploadIcon } from "lucide-react";
 import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
+import { jsPDF } from "jspdf";
 
-const page = () => {
+const ImageToText = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [textResult, setTextResult] = useState("");
   const { toast } = useToast();
@@ -58,7 +59,20 @@ const page = () => {
     if (textResult) {
       navigator.clipboard.writeText(textResult);
       toast({ title: "Text Copied." });
+    } else {
+      toast({ title: "No images uploaded yet." });
     }
+  };
+
+  const downloadPDF = () => {
+    const pdf = new jsPDF();
+    pdf.addFont("fonts/Roboto-Medium.ttf", "TurkishFont", "normal");
+    pdf.setFont("TurkishFont");
+    pdf.text(textResult, 20, 25);
+    const pdfData = pdf.output();
+    const blob = new Blob([pdfData], { type: "application/pdf" });
+    const blobURL = URL.createObjectURL(blob);
+    window.open(blobURL);
   };
 
   return (
@@ -114,6 +128,13 @@ const page = () => {
               variant="text"
               tabIndex={-1}
               startIcon={<BsFiletypePdf size={25} color="black" />}
+              onClick={() => {
+                if (textResult) {
+                  downloadPDF();
+                } else {
+                  toast({ title: "No images uploaded yet." });
+                }
+              }}
             ></Button>
             <Button
               variant="text"
@@ -143,4 +164,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ImageToText;
