@@ -12,6 +12,7 @@ import { CloudUploadIcon } from "lucide-react";
 import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
 import { jsPDF } from "jspdf";
+import { Textarea } from "@/components/ui/textarea";
 
 const ImageToText = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -146,7 +147,14 @@ const ImageToText = () => {
         </CardHeader>
         <CardContent>
           {textResult && (
-            <p className="overflow-y-auto h-80 text-sm">{textResult}</p>
+            <Textarea
+              placeholder="Type your message here."
+              className="resize-none h-[350px] w-[96%] mx-auto bg-slate-100 "
+              value={textResult}
+              onChange={(e) => {
+                setTextResult(e.target.value);
+              }}
+            />
           )}
           {!textResult && selectedImage && (
             <div className="flex items-center justify-center h-80 w-full">
