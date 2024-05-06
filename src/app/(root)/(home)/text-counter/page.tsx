@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useToast } from "@/components/ui/use-toast";
-const page = () => {
+
+const TextCounter = () => {
     const [value, setValue] = useState("");
     const [countLetter, setCountLetter] = useState(0);
     const [countWord, setCountWord] = useState(0);
@@ -12,7 +13,6 @@ const page = () => {
     const { toast } = useToast();
 
     const counterWord = (text: string) => {
-        console.log(text.length);
         
         if (text.length > 2400) {
             setError(true)
@@ -73,4 +73,4 @@ const page = () => {
         // </div>
     );
 };
-export default page;
+export default TextCounter;
