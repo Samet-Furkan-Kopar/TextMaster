@@ -27,8 +27,8 @@ const MeetingTypeList = ({ setLoading}:MeetingTypeListProps) => {
     // }
 
     return (
-        <div >
-            <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4 mt-5 ">
+        <div>
+            <section className="grid grid-cols-1 xl:gap-12 gap-5 md:grid-cols-2 xl:grid-cols-4 mt-5">
                 {/* <Tilt
                     options={{
                         max: 20,
