@@ -11,7 +11,10 @@ import { CloudUploadIcon } from "lucide-react";
 import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
 import { jsPDF } from "jspdf";
+import { Tooltip } from "@mui/material";
+import { FaRegFileWord } from "react-icons/fa";
 import { Textarea } from "@/components/ui/textarea";
+import { saveAs } from "file-saver";
 
 const textSummary = () => {
   const [text, setText] = useState("");
@@ -51,6 +54,30 @@ const textSummary = () => {
       setIsPost(true);
       await postData();
     }
+  };
+
+  const downloadWord = () => {
+    const blob = new Blob([textResult], { type: "application/msword" });
+    saveAs(blob, "speech_text.doc");
+  };
+  const copyText = () => {
+    if (textResult) {
+      navigator.clipboard.writeText(textResult);
+      toast({ title: "Text Copied." });
+    } else {
+      toast({ title: "No text yet." });
+    }
+  };
+
+  const downloadPDF = () => {
+    const pdf = new jsPDF();
+    pdf.addFont("fonts/Roboto-Medium.ttf", "TurkishFont", "normal");
+    pdf.setFont("TurkishFont");
+    pdf.text(textResult, 20, 25);
+    const pdfData = pdf.output();
+    const blob = new Blob([pdfData], { type: "application/pdf" });
+    const blobURL = URL.createObjectURL(blob);
+    window.open(blobURL);
   };
 
   return (
@@ -94,16 +121,42 @@ const textSummary = () => {
         <CardHeader className="flex flex-row space-y-0 justify-between items-center">
           <CardTitle className="flex text-center">Summary</CardTitle>
           <div className="flex flex-row gap-1">
-            <Button
-              variant="text"
-              tabIndex={-1}
-              startIcon={<BsFiletypePdf size={25} color="black" />}
-            ></Button>
-            <Button
-              variant="text"
-              tabIndex={-1}
-              startIcon={<IoCopyOutline size={25} color="black" />}
-            ></Button>
+            <Tooltip title="Download as Pdf">
+              <Button
+                variant="text"
+                tabIndex={-1}
+                startIcon={<BsFiletypePdf size={25} color="black" />}
+                onClick={() => {
+                  if (textResult) {
+                    downloadPDF();
+                  } else {
+                    toast({ title: "No text yet." });
+                  }
+                }}
+              ></Button>
+            </Tooltip>
+            <Tooltip title="Download as Word">
+              <Button
+                variant="text"
+                tabIndex={-1}
+                startIcon={<FaRegFileWord size={25} color="black" />}
+                onClick={() => {
+                  if (textResult) {
+                    downloadWord();
+                  } else {
+                    toast({ title: "No text yet." });
+                  }
+                }}
+              />
+            </Tooltip>
+            <Tooltip title="Copy Text">
+              <Button
+                variant="text"
+                tabIndex={-1}
+                startIcon={<IoCopyOutline size={25} color="black" />}
+                onClick={copyText}
+              ></Button>
+            </Tooltip>
           </div>
         </CardHeader>
         <div className="h-[350px]">
