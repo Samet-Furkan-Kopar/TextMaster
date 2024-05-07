@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/select";
 import { SelectGroup } from "@radix-ui/react-select";
 
-const textSummary = () => {
+const TextSummary = () => {
   const [text, setText] = useState("");
   const [textResult, setTextResult] = useState("");
   const { toast } = useToast();
@@ -94,6 +94,7 @@ const textSummary = () => {
   useEffect(() => {
     console.log("rate", rate);
   }, [rate]);
+  console.log("rate", rate);
 
   return (
     <div className="flex flex-row gap-5 items-center justify-center mx-auto mt-8">
@@ -101,7 +102,7 @@ const textSummary = () => {
         <CardHeader className="flex flex-row space-y-0 justify-between items-center h-1/5">
           <CardTitle className="flex text-center">Text Input</CardTitle>
           <div className="flex">
-            <Select>
+            <Select onValueChange={(value)=> setRate(value)}>
               <SelectTrigger className="w-[130px] bg-slate-50">
                 <SelectValue placeholder="Select a rate" />
               </SelectTrigger>
@@ -111,9 +112,7 @@ const textSummary = () => {
                     return (
                       <SelectItem
                         value={iconItem}
-                        onChange={(e) => {
-                          setRate(iconItem);
-                        }}
+                        // onChange={(e) => setRate(e.target.value) }
                         key={key}
                       >
                         {iconItem}
@@ -224,4 +223,4 @@ const textSummary = () => {
   );
 };
 
-export default textSummary;
+export default TextSummary;
