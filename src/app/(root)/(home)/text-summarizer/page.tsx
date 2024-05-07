@@ -15,12 +15,23 @@ import { Tooltip } from "@mui/material";
 import { FaRegFileWord } from "react-icons/fa";
 import { Textarea } from "@/components/ui/textarea";
 import { saveAs } from "file-saver";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { SelectGroup } from "@radix-ui/react-select";
 
 const textSummary = () => {
   const [text, setText] = useState("");
   const [textResult, setTextResult] = useState("");
   const { toast } = useToast();
   const [isPost, setIsPost] = useState(false);
+  const rates = ["0.4", "0.5", "0.6", "0.7", "0.8"];
+  const [rate, setRate] = useState("");
+
   const postData = async () => {
     try {
       const response = await fetch(
@@ -80,12 +91,39 @@ const textSummary = () => {
     window.open(blobURL);
   };
 
+  useEffect(() => {
+    console.log("rate", rate);
+  }, [rate]);
+
   return (
     <div className="flex flex-row gap-5 items-center justify-center mx-auto mt-8">
       <Card className="flex flex-col w-1/2 min-h-[450px] bg-slate-100">
         <CardHeader className="flex flex-row space-y-0 justify-between items-center h-1/5">
           <CardTitle className="flex text-center">Text Input</CardTitle>
-          <div>
+          <div className="flex">
+            <Select>
+              <SelectTrigger className="w-[130px] bg-slate-50">
+                <SelectValue placeholder="Select a rate" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {rates.map((iconItem, key) => {
+                    return (
+                      <SelectItem
+                        value={iconItem}
+                        onChange={(e) => {
+                          setRate(iconItem);
+                        }}
+                        key={key}
+                      >
+                        {iconItem}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
             <Button
               component="label"
               role={undefined}
