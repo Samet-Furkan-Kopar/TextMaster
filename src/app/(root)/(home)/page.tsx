@@ -18,14 +18,12 @@ const Home = () => {
         });
         const data = await res.json();
         console.log(data);
-        router.push(data.url);
+        // router.push(data.url);
     };
     if(loading) return <Loader/>
 
     return (
-        <motion.section
-            initial={{ opacity: 0, translateY: 40 }}
-            animate={{ opacity: 1, translateY: 0 }}
+        <section
             className="flex size-full flex-col gap-10 text-white"
         >
             <div className="h-[250px] w-full bg-home rounded-[20px] bg-black bg-cover mx-auto">
@@ -36,12 +34,12 @@ const Home = () => {
                     <div className="flex flex-col gap-2">
                         <p className="text-lg font-medium text-sky-1 lg:text-2xl">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla iusto eos tempore atque beatae sint, dolor esse quod quae qui.</p>
                         {/* <Link className='bg-white text-black' href='/login'>login</Link> */}
-                        {/* <button onClick={()=>login()} className='bg-white text-black'>login</button> */}
+                        <button onClick={()=>login()} className='bg-white text-black'>login</button>
                     </div>
                 </div>
                 <ConverterTypes setLoading={setLoading} />
             </div>
-        </motion.section>
+        </section>
     );
 };
 
