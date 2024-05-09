@@ -1,0 +1,38 @@
+{
+  "rates": [
+    {
+      "rate": "0.4",
+      "rateStr": "%40"
+    },
+    {
+      "rate": "0.5",
+      "rateStr": "%50"
+    },
+    {
+      "rate": "0.6",
+      "rateStr": "%60"
+    },
+    {
+      "rate": "0.7",
+      "rateStr": "%70"
+    },
+    {
+      "rate": "0.8",
+      "rateStr": "%80"
+    }
+  ],
+  "langs": [
+    {
+      "lang": "en",
+      "langStr": "English"
+    },
+    {
+      "lang": "tr",
+      "langStr": "Türkçe"
+    },
+    {
+      "lang": "fr",
+      "langStr": "French"
+    }
+  ]
+}

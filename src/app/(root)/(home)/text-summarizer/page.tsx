@@ -23,34 +23,32 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SelectGroup } from "@radix-ui/react-select";
+import data from "./data.json";
 
-const TextSummary = () => {
+const textSummary = () => {
   const [text, setText] = useState("");
   const [textResult, setTextResult] = useState("");
   const { toast } = useToast();
   const [isPost, setIsPost] = useState(false);
-  const rates = ["0.4", "0.5", "0.6", "0.7", "0.8"];
   const [rate, setRate] = useState("");
+  const [lang, setLang] = useState("");
 
   const postData = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:8800/api/v1/text/summarization",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text: text }), // Veriyi JSON formatına dönüştür
-        }
-      );
+      const response = await fetch("http://localhost:5000/summary", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: text, percent: +rate, lang: lang }), // Veriyi JSON formatına dönüştür
+      });
       if (!response.ok) {
         setIsPost(false);
         throw new Error("Network response was not ok");
       }
       setIsPost(false);
       const responseData = await response.json();
-      setTextResult(responseData.data[0].summary_text);
+      setTextResult(responseData.summary);
     } catch (error) {
       setIsPost(false);
       console.error("There was a problem with your fetch operation:", error);
@@ -61,7 +59,12 @@ const TextSummary = () => {
   const handleDone = async () => {
     if (text.length < 100) {
       toast({ title: "Text Length < 100" });
+    } else if (!lang) {
+      toast({ title: "Please select a language" });
+    } else if (!rate) {
+      toast({ title: "Please select a rate" });
     } else {
+      setTextResult("");
       setIsPost(true);
       await postData();
     }
@@ -91,31 +94,38 @@ const TextSummary = () => {
     window.open(blobURL);
   };
 
-  useEffect(() => {
-    console.log("rate", rate);
-  }, [rate]);
-  console.log("rate", rate);
-
   return (
     <div className="flex flex-row gap-5 items-center justify-center mx-auto mt-8">
       <Card className="flex flex-col w-1/2 min-h-[450px] bg-slate-100">
         <CardHeader className="flex flex-row space-y-0 justify-between items-center h-1/5">
           <CardTitle className="flex text-center">Text Input</CardTitle>
-          <div className="flex">
-            <Select onValueChange={(value)=> setRate(value)}>
+          <div className="flex gap-2">
+            <Select onValueChange={(value) => setLang(value)}>
+              <SelectTrigger className="w-[130px] bg-slate-50">
+                <SelectValue placeholder="Language" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {data.langs.map((Item, key) => {
+                    return (
+                      <SelectItem value={Item.lang} key={key}>
+                        {Item.langStr}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select onValueChange={(value) => setRate(value)}>
               <SelectTrigger className="w-[130px] bg-slate-50">
                 <SelectValue placeholder="Select a rate" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {rates.map((iconItem, key) => {
+                  {data.rates.map((Item, key) => {
                     return (
-                      <SelectItem
-                        value={iconItem}
-                        // onChange={(e) => setRate(e.target.value) }
-                        key={key}
-                      >
-                        {iconItem}
+                      <SelectItem value={Item.rate} key={key}>
+                        {Item.rateStr}
                       </SelectItem>
                     );
                   })}
@@ -223,4 +233,4 @@ const TextSummary = () => {
   );
 };
 
-export default TextSummary;
+export default textSummary;
